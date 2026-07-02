@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The King's Mah Boi Button</title>
+    <style>
+        @font-face {
+    font-family: 'Comic Sans MS';
+    src: url('../Comic Sans MS.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: #FFD700;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Comic Sans MS, cursive;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .mahboi-button {
+            width: 250px;
+            height: 250px;
+            max-width: 70vw;
+            max-height: 70vw;
+            background-color: #FFFFFF;
+            border: 8px solid #000000;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4), inset 0 -8px 0 #DDDDDD;
+            outline: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            transition: transform 0.05s ease, box-shadow 0.05s ease;
+        }
+
+        .mahboi-button img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .mahboi-label {
+            position: absolute;
+            top: calc(50% - 175px);
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #FFFFFF;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            letter-spacing: 1px;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .mahboi-button.pressed {
+            transform: scale(0.92);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4), inset 0 -2px 0 #DDDDDD;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="mahboi-label">The King's Mah Boi Button</div>
+    <button class="mahboi-button" id="mahboiBtn" aria-label="The King's Mah Boi Button">
+        <img src="King-Harkinian-CD-i.png" alt="King Harkinian">
+    </button>
+
+    <script>
+        const button = document.getElementById('mahboiBtn');
+
+        // Preload image via JS
+        const preloadImg = new Image();
+        preloadImg.src = 'King-Harkinian-CD-i.png';
+
+        // Preload audio via Web Audio API — each press spawns a new BufferSource so sounds overlap
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        let audioCtx = null;
+        let audioBuffer = null;
+
+        async function loadAudio() {
+            if (!AudioContext) return;
+            audioCtx = new AudioContext();
+            try {
+                const res = await fetch('MahBoi.mp3');
+                const arrayBuf = await res.arrayBuffer();
+                audioBuffer = await audioCtx.decodeAudioData(arrayBuf);
+            } catch (err) {
+                console.log('Audio preload failed, falling back to Audio element.', err);
+                audioCtx = null;
+            }
+        }
+        loadAudio();
+
+        // Chrome requires a first user gesture before vibration is allowed.
+        // This silently "unlocks" vibration on the first touch.
+        window.addEventListener('touchstart', () => {
+            if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+            if (navigator.vibrate) navigator.vibrate(1);
+        }, { once: true });
+
+        function playMahBoi(e) {
+            if (e) e.preventDefault();
+
+            // Press animation
+            button.classList.add('pressed');
+            setTimeout(() => button.classList.remove('pressed'), 150);
+
+            // Vibration on press
+            if (navigator.vibrate) {
+                navigator.vibrate(40);
+            }
+
+            // Each press creates a new BufferSource — fully overlapping chaos 🔥
+            if (audioCtx && audioBuffer) {
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+                const source = audioCtx.createBufferSource();
+                source.buffer = audioBuffer;
+                source.connect(audioCtx.destination);
+                source.start(0);
+            } else {
+                const audio = new Audio('MahBoi.mp3');
+                audio.play().catch(err => console.log('Audio playback failed.', err));
+            }
+        }
+
+        // Event listeners
+        // Track touch so click doesn't double-fire on mobile
+        let didTouch = false;
+        button.addEventListener('touchstart', (e) => {
+            didTouch = true;
+            playMahBoi(e);
+        }, { passive: false });
+        button.addEventListener('click', (e) => {
+            if (didTouch) { didTouch = false; return; }
+            playMahBoi(e);
+        });
+    </script>
+
+</body>
+</html>
