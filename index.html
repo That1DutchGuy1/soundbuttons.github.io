@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🔊 Sound Button Hub</title>
+  <style>
+          @font-face {
+    font-family: 'Comic Sans MS';
+    src: url('./comic-sans.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+      
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: "Comic Sans MS", "Comic Sans", cursive;
+      background: linear-gradient(
+        135deg,
+        #ff0000,
+        #ff7700,
+        #ffff00,
+        #00ff00,
+        #0000ff,
+        #8b00ff
+      );
+      background-size: 400% 400%;
+      animation: rainbowShift 8s ease infinite;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+
+    @keyframes rainbowShift {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .hub-title {
+      font-size: 2.8rem;
+      color: #fff;
+      text-shadow:
+        3px 3px 0px #000,
+        -1px -1px 0px #000,
+        1px -1px 0px #000,
+        -1px 1px 0px #000;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .hub-subtitle {
+      font-size: 1.1rem;
+      color: #fff;
+      text-shadow: 2px 2px 0px #000;
+      margin-bottom: 40px;
+      text-align: center;
+    }
+
+    .buttons-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      max-width: 800px;
+    }
+
+    .sound-btn {
+      font-family: "Comic Sans MS", "Comic Sans", cursive;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #fff;
+      background: rgba(0, 0, 0, 0.55);
+      border: 3px solid #fff;
+      border-radius: 16px;
+      padding: 18px 32px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+      text-shadow: 1px 1px 0px #000;
+      box-shadow: 4px 4px 0px rgba(0,0,0,0.4);
+      display: inline-block;
+    }
+
+    .sound-btn:hover {
+      background: rgba(0, 0, 0, 0.75);
+      transform: translateY(-4px) scale(1.05);
+      box-shadow: 6px 6px 0px rgba(0,0,0,0.5);
+    }
+
+    .sound-btn:active {
+      transform: translateY(1px) scale(0.98);
+      box-shadow: 2px 2px 0px rgba(0,0,0,0.4);
+    }
+
+    .footer {
+      margin-top: 50px;
+      font-size: 0.85rem;
+      color: #fff;
+      text-shadow: 1px 1px 0px #000;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="hub-title">🔊 Sound Button Hub 🔊</div>
+  <div class="hub-subtitle">NOW THAT'S A LOT OF MEMES!!</div>
+
+  <div class="buttons-grid">
+    <!-- ==========================================
+         ADD NEW BUTTONS BELOW THIS LINE
+         Format:
+         <a class="sound-btn" href="FolderName/FileName.html">Button Label</a>
+         ========================================== -->
+
+    <a class="sound-btn" href="ThePingasButton/ThePingasButton.html">Robotnik's Pingas Button</a>
+    <a class="sound-btn" href="TheMahBoiButton/TheMahBoiButton.html">The King's Mah Boi Button</a>
+
+    <!-- ==========================================
+         ADD NEW BUTTONS ABOVE THIS LINE
+         ========================================== -->
+  </div>
+
+  <div class="footer">more buttons coming soon probably lol</div>
+
+</body>
+</html>
