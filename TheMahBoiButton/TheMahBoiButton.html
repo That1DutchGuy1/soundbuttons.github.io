@@ -4,7 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The King's Mah Boi Button</title>
+    <link rel="icon" href="favicon/TheMahBoiButton.ico" type="image/x-icon">
     <style>
+
+        @property --angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+}
+
         @font-face {
     font-family: 'Comic Sans MS';
     src: url('../comic-sans.ttf') format('truetype');
@@ -20,7 +28,16 @@
         }
 
         body {
-            background-color: #FFD700;
+            background: conic-gradient(
+                from var(--angle) at center,
+                #FFA500,
+                #FFBC00,
+                #FFD700,
+                #FFE666,
+                #FFD700,
+                #FFBC00,
+                #FFA500
+            );
             height: 100vh;
             display: flex;
             justify-content: center;
@@ -28,7 +45,29 @@
             font-family: Comic Sans MS, cursive;
             overflow: hidden;
             position: relative;
+            animation: spin 10s linear infinite;
+            z-index: -1;
         }
+
+        @keyframes spin {
+        to {
+        --angle: 360deg;
+  }
+}
+
+#hub-btn {
+    position: absolute;
+    top: 20px;
+    padding: 10px 15px;
+    font-size: 1rem;
+    background-color: transparent;
+    color: #fff;
+    text-decoration: none;
+    border:#000000 solid 2px;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
 
         .mahboi-button {
             width: 250px;
@@ -76,6 +115,8 @@
     </style>
 </head>
 <body>
+
+<a href="../index.html" id="hub-btn" class="button">← HUB</a>
 
     <div class="mahboi-label">The King's Mah Boi Button</div>
     <button class="mahboi-button" id="mahboiBtn" aria-label="The King's Mah Boi Button">

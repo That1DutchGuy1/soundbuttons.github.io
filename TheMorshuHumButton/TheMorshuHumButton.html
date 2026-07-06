@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Robotnik's Pingas Button</title>
-    <link rel="icon" href="favicon/ThePingasButton.ico" type="image/x-icon">
+    <title>Morshu's MMMMMM Button</title>
+    <link rel="icon" href="favicon/TheMorshuHumButton.ico" type="image/x-icon">
     <style>
 
         @property --angle {
@@ -30,13 +30,13 @@
         body {
             background: conic-gradient(
                 from var(--angle) at center,
-                #FF4500,
-                #FF6A00,
-                #FF8C00,
-                #FFA733,
-                #FF8C00,
-                #FF6A00,
-                #FF4500
+                #ff5a1f,
+                #ff7b2d,
+                #ff9a3d,
+                #ffb04d,
+                #ff9a3d,
+                #ff7b2d,
+                #ff5a1f
             );
             height: 100vh;
             display: flex;
@@ -69,7 +69,7 @@
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-        .pingas-button {
+        .morshu-button {
             width: 250px;
             height: 250px;
             max-width: 70vw;
@@ -87,7 +87,7 @@
             transition: transform 0.05s ease, box-shadow 0.05s ease;
         }
 
-        .pingas-button img {
+        .morshu-button img {
             width: 100%;
             height: 100%;
             object-fit: cover;
@@ -95,7 +95,7 @@
             pointer-events: none;
         }
 
-        .pingas-label {
+        .morshu-label {
             position: absolute;
             top: calc(50% - 175px);
             text-align: center;
@@ -108,7 +108,7 @@
             user-select: none;
         }
 
-        .pingas-button.pressed {
+        .morshu-button.pressed {
             transform: scale(0.92);
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4), inset 0 -2px 0 #DDDDDD;
         }
@@ -118,17 +118,17 @@
 
 <a href="../index.html" id="hub-btn" class="button">← HUB</a>
 
-    <div class="pingas-label">Robotnik's Pingas Button</div>
-    <button class="pingas-button" id="pingasBtn" aria-label="Robotnik's Pingas Button">
-        <img src="Pingas.png" alt="Pingas">
+    <div class="morshu-label">Morshu's MMMMMM Button</div>
+    <button class="morshu-button" id="morshuBtn" aria-label="Morshu's MMMMMM Button">
+        <img src="Morshu.png" alt="Morshu's MMMMMM Button">
     </button>
 
     <script>
-        const button = document.getElementById('pingasBtn');
+        const button = document.getElementById('morshuBtn');
 
         // Preload image via JS
         const preloadImg = new Image();
-        preloadImg.src = 'Pingas.png';
+        preloadImg.src = 'Morshu.png';
 
         // Preload audio via Web Audio API — each press spawns a new BufferSource so sounds overlap
         const AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -139,7 +139,7 @@
             if (!AudioContext) return;
             audioCtx = new AudioContext();
             try {
-                const res = await fetch('Pingas.mp3');
+                const res = await fetch('MMMMMM.mp3');
                 const arrayBuf = await res.arrayBuffer();
                 audioBuffer = await audioCtx.decodeAudioData(arrayBuf);
             } catch (err) {
@@ -156,7 +156,7 @@
             if (navigator.vibrate) navigator.vibrate(1);
         }, { once: true });
 
-        function playPingas(e) {
+        function playMorshu(e) {
             if (e) e.preventDefault();
 
             // Press animation
@@ -176,7 +176,7 @@
                 source.connect(audioCtx.destination);
                 source.start(0);
             } else {
-                const audio = new Audio('Pingas.mp3');
+                const audio = new Audio('MMMMMM.mp3');
                 audio.play().catch(err => console.log('Audio playback failed.', err));
             }
         }
@@ -186,11 +186,11 @@
         let didTouch = false;
         button.addEventListener('touchstart', (e) => {
             didTouch = true;
-            playPingas(e);
+            playMorshu(e);
         }, { passive: false });
         button.addEventListener('click', (e) => {
             if (didTouch) { didTouch = false; return; }
-            playPingas(e);
+            playMorshu(e);
         });
     </script>
 

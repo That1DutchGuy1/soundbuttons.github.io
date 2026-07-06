@@ -1,13 +1,14 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Robotnik's Pingas Button</title>
-    <link rel="icon" href="favicon/ThePingasButton.ico" type="image/x-icon">
+    <title>The Bup Button</title>
+    <link rel="icon" href="favicon/TheBupButton.ico" type="image/x-icon">
     <style>
 
-        @property --angle {
+    @property --angle {
     syntax: '<angle>';
     initial-value: 0deg;
     inherits: false;
@@ -28,30 +29,31 @@
         }
 
         body {
-            background: conic-gradient(
-                from var(--angle) at center,
-                #FF4500,
-                #FF6A00,
-                #FF8C00,
-                #FFA733,
-                #FF8C00,
-                #FF6A00,
-                #FF4500
-            );
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: Comic Sans MS, cursive;
-            overflow: hidden;
-            position: relative;
-            animation: spin 10s linear infinite;
-            z-index: -1;
-        }
+ background: conic-gradient(
+    from var(--angle) at center,
+    #d1ac84,
+    #e0ba8c,
+    #f5c690,
+    #ffd9a8,
+    #f5c690,
+    #e0ba8c,
+    #d1ac84
+  );
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Comic Sans MS, cursive;
+  overflow: hidden;
+  position: relative;
+  margin: 0;
+  animation: spin 10s linear infinite;
+  z-index: -1;
+}
 
-        @keyframes spin {
-        to {
-        --angle: 360deg;
+@keyframes spin {
+  to {
+    --angle: 360deg;
   }
 }
 
@@ -69,7 +71,7 @@
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-        .pingas-button {
+        .bup-button {
             width: 250px;
             height: 250px;
             max-width: 70vw;
@@ -87,7 +89,7 @@
             transition: transform 0.05s ease, box-shadow 0.05s ease;
         }
 
-        .pingas-button img {
+        .bup-button img {
             width: 100%;
             height: 100%;
             object-fit: cover;
@@ -95,7 +97,7 @@
             pointer-events: none;
         }
 
-        .pingas-label {
+        .bup-label {
             position: absolute;
             top: calc(50% - 175px);
             text-align: center;
@@ -108,7 +110,7 @@
             user-select: none;
         }
 
-        .pingas-button.pressed {
+        .bup-button.pressed {
             transform: scale(0.92);
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4), inset 0 -2px 0 #DDDDDD;
         }
@@ -118,17 +120,17 @@
 
 <a href="../index.html" id="hub-btn" class="button">← HUB</a>
 
-    <div class="pingas-label">Robotnik's Pingas Button</div>
-    <button class="pingas-button" id="pingasBtn" aria-label="Robotnik's Pingas Button">
-        <img src="Pingas.png" alt="Pingas">
+    <div class="bup-label">Toad's Bup Button</div>
+    <button class="bup-button" id="bupBtn" aria-label="Toad's Bup Button">
+        <img src="Bup.png" alt="Toad's Bup Button">
     </button>
 
     <script>
-        const button = document.getElementById('pingasBtn');
+        const button = document.getElementById('bupBtn');
 
         // Preload image via JS
         const preloadImg = new Image();
-        preloadImg.src = 'Pingas.png';
+        preloadImg.src = 'Bup.png';
 
         // Preload audio via Web Audio API — each press spawns a new BufferSource so sounds overlap
         const AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -139,7 +141,7 @@
             if (!AudioContext) return;
             audioCtx = new AudioContext();
             try {
-                const res = await fetch('Pingas.mp3');
+                const res = await fetch('Bup.mp3');
                 const arrayBuf = await res.arrayBuffer();
                 audioBuffer = await audioCtx.decodeAudioData(arrayBuf);
             } catch (err) {
@@ -156,7 +158,7 @@
             if (navigator.vibrate) navigator.vibrate(1);
         }, { once: true });
 
-        function playPingas(e) {
+        function playBup(e) {
             if (e) e.preventDefault();
 
             // Press animation
@@ -176,7 +178,7 @@
                 source.connect(audioCtx.destination);
                 source.start(0);
             } else {
-                const audio = new Audio('Pingas.mp3');
+                const audio = new Audio('Bup.mp3');
                 audio.play().catch(err => console.log('Audio playback failed.', err));
             }
         }
@@ -186,11 +188,11 @@
         let didTouch = false;
         button.addEventListener('touchstart', (e) => {
             didTouch = true;
-            playPingas(e);
+            playBup(e);
         }, { passive: false });
         button.addEventListener('click', (e) => {
             if (didTouch) { didTouch = false; return; }
-            playPingas(e);
+            playBup(e);
         });
     </script>
 
